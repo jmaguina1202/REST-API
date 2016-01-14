@@ -1,0 +1,42 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.5
+version = '1.0'
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testRuntime
+    }
+}
+
+task cucumber() {
+    dependsOn assemble
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime
+            args = ['-f', 'pretty', '--glue', 'src/test/java', 'src/test/resources']
+        }
+    }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+dependencies {
+    compile 'org.json:json:20151123'
+    compile group: 'org.apache.httpcomponents' , name: 'httpclient' , version: '4.3.6'
+    testCompile group: 'junit', name: 'junit', version: '4.11',
+    'info.cukes:cucumber-java:1.1.8',
+    'info.cukes:cucumber-junit:1.1.8'
+    cucumberRuntime files("${jar.archivePath}"
+    )
+}
+
+repositories {
+    mavenCentral()
+}
