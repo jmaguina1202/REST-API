@@ -16,9 +16,6 @@ public class CommonUtils {
     public CommonUtils() {
     }
 
-    private static final String PROPERTIES_FILE_PATH = "resources.properties";
-
-
     public String postRequest(String url, String authorization, String jsonData) throws UnsupportedEncodingException, IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost postRequest = new HttpPost(url + ".json");
@@ -70,12 +67,6 @@ public class CommonUtils {
 
     public String status(HttpResponse response,CloseableHttpClient httpClient)  throws UnsupportedEncodingException, IOException {
         String result = "";
-        //Verification of response
-        if (response.getStatusLine().getStatusCode() != 200) {
-            System.out.println("error");
-            throw new RuntimeException("Failed : HTTP error code : "
-                    + response.getStatusLine().getStatusCode());
-        }
         BufferedReader br = new BufferedReader(
                 new InputStreamReader((response.getEntity().getContent())));
         String output;
@@ -89,28 +80,6 @@ public class CommonUtils {
             }
         }
         httpClient.close();
-        return result;
-    }
-
-    public String readProperty(String propertyString) {
-        Properties properties = new Properties();
-        InputStream input = null;
-        String result = "";
-        try {
-            input = new FileInputStream(PROPERTIES_FILE_PATH);
-            properties.load(input);
-            result = properties.getProperty(propertyString);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         return result;
     }
 }
