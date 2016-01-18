@@ -2,8 +2,10 @@ Feature: As an API consumer
   I want to manage the projects using the REST API
 
   Scenario: project using REST
-    When I did a post request "Content": "Testeo" : "Icon": 4
-    Then The response should contain the data with the string value "Content" and "Testeo"
+    When I did a post request:
+      |Content|nameProject|
+      |Icon   |6     |
+    Then The response should contain the data with the string value "Content" and "nameProject"
 
     When I did a put request with the id "3494145" and the values "Content": "NameModified" : "Icon": 4
     Then The response should contain the data with the string value "Content" and "NameModified"

@@ -1,22 +1,27 @@
 package steps;
 
-import cucumber.api.java.en.Then;
+import cucumber.api.DataTable;
 import cucumber.api.java.en.When;
-import org.junit.Assert;
 import org.json.JSONObject;
 import utils.CommonUtils;
+import java.util.List;
 
-public class ManageProjects1 {
+public class ResourcesSteps {
     private String jsonResponse;
+    private CommonUtils util = new CommonUtils();
 
-    @When("^I did a post request \"(.*?)\": \"(.*?)\" : \"(.*?)\": (\\d+)$")
-    public void iDidPostRequest(String tagContent, String contentValue, String tagIcon, int iconValue) throws
+    public String getJsonResponse() {
+        return jsonResponse;
+    }
+
+    @When("^I did a post request:$")
+    public void iDidPostRequest(DataTable table) throws
             Throwable {
-        JSONObject project = new JSONObject();
-        project.put(tagContent, contentValue);
-        project.put(tagIcon, iconValue);
-
-        CommonUtils util = new CommonUtils();
+       List<List<String>> data =table.raw();
+       JSONObject project = new JSONObject();
+        for ( int index = 0; index < data.size(); index ++ ) {
+            project.put(data.get(index).get(0), data.get(index).get(1));
+        }
         jsonResponse = util.postRequest(util.readProperty("rest.projects.url"),
                 util.readProperty("rest.projects.authorization"), project.toString());
     }
@@ -24,7 +29,6 @@ public class ManageProjects1 {
     @When("^I did a get all request")
     public void iDidGetAllRequest() throws
             Throwable {
-        CommonUtils util = new CommonUtils();
         jsonResponse = util.getRequest(util.readProperty("rest.projects.url"),
                 util.readProperty("rest.projects.authorization"));
     }
@@ -32,7 +36,6 @@ public class ManageProjects1 {
     @When("^I did a get request with the id \"(.*?)\"")
     public void iDidGetRequest(String id) throws
             Throwable {
-        CommonUtils util = new CommonUtils();
         jsonResponse = util.getRequestId(util.readProperty("rest.projects.url"),
                 util.readProperty("rest.projects.authorization"),id);
     }
@@ -44,7 +47,6 @@ public class ManageProjects1 {
         project.put(tagContent, contentValue);
         project.put(tagIcon, iconValue);
 
-        CommonUtils util = new CommonUtils();
         jsonResponse = util.putRequest(util.readProperty("rest.projects.url"),
                 util.readProperty("rest.projects.authorization"), id, project.toString());
     }
@@ -52,23 +54,9 @@ public class ManageProjects1 {
     @When("^I did a delete request with the id \"(.*?)\"")
     public void iDidDeleteRequest(String id) throws
             Throwable {
-        CommonUtils util = new CommonUtils();
         jsonResponse = util.deleteRequest(util.readProperty("rest.projects.url"),
                 util.readProperty("rest.projects.authorization"),id);
     }
 
-    @Then("^The response should contain the data with the string value \"(.*?)\" and \"(.*?)\"$")
-    public void theResponseShouldContainSentDataWithStringValue(String tag, String tagValue) throws Throwable {
-        Assert.assertTrue(jsonResponse.contains("\"" + tag + "\":" + "\"" + tagValue + "\""));
-    }
 
-    @Then("^The response should contain \"(.*?)\" and \"(.*?)\"$")
-    public void theResponseShouldContainSentData(String tag, String tagValue) throws Throwable {
-        Assert.assertTrue(jsonResponse.contains("\"" + tag + "\":" + tagValue ));
-    }
-
-    @Then("^Response is not empty")
-    public void responseIsNotEmpty() throws Throwable {
-        Assert.assertFalse(jsonResponse.isEmpty());
-    }
 }
