@@ -12,12 +12,12 @@ public class ResponsesSteps {
     }
 
     @Then("^The response should contain the data with the string value \"(.*?)\" and \"(.*?)\"$")
-    public void theResponseShouldContainSentDataWithStringValue(String tag, String tagValue) throws Throwable {
+    public void theResponseShouldContainSentDataWithStringValue(String tag, String tagValue){
         Assert.assertTrue(projectSteps.getJsonResponse().contains("\"" + tag + "\":" + "\"" + tagValue + "\""));
     }
 
     @Then("^The response should contain \"(.*?)\" and \"(.*?)\"$")
-    public void theResponseShouldContainSentData(String tag, String tagValue) throws Throwable {
+    public void theResponseShouldContainSentData(String tag, String tagValue){
         Assert.assertTrue(projectSteps.getJsonResponse().contains("\"" + tag + "\":" + tagValue));
     }
 
