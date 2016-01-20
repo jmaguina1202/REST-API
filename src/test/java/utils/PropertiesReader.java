@@ -11,7 +11,9 @@ public class PropertiesReader {
     private Properties properties = new Properties();
 
     private static final String PROPERTIES_FILE_PATH = "resources.properties";
-    private static final String PROPERTY_URL = "rest.projects.url";
+    private static final String PROJECT_URL = "rest.projects.url";
+    private static final String USER_URL = "rest.user.url";
+    private static final String ITEM_URL = "rest.item.url";
     private static final String AUTHORIZATION_STRING = "rest.projects.authorization";
 
     private PropertiesReader() {
@@ -39,8 +41,21 @@ public class PropertiesReader {
         return instance;
     }
 
-    public String getEndPoint() {
-        return properties.getProperty(PROPERTY_URL);
+    public String getEndPoint(String type) {
+        String endPoint="";
+        if(type.equals("project"))
+        {
+            return properties.getProperty(PROJECT_URL);
+        }
+        if(type.equals("user"))
+        {
+            endPoint = properties.getProperty(USER_URL);
+        }
+        if(type.equals("item"))
+        {
+            endPoint = properties.getProperty(ITEM_URL);
+        }
+        return endPoint;
     }
 
     public String getAuthorizationString() {
