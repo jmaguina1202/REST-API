@@ -1,7 +1,7 @@
 Feature: As an API consumer
-  I want to manage the projects using the REST API
+  I want to manage the users using the REST API
 
-  Scenario: project using REST
+  Scenario: user using REST
     When I did a post request "user" with the values:
       | Email        | usernew10@email.com|
       | FullName     | Joe Blow      |
