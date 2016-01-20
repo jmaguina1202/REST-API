@@ -6,7 +6,7 @@ version = '1.0'
 
 configurations {
     cucumberRuntime {
-        extendsFrom testRuntime
+        extendsFrom runtime
     }
 }
 
@@ -30,9 +30,10 @@ buildscript {
 dependencies {
     compile 'org.json:json:20151123'
     compile group: 'org.apache.httpcomponents' , name: 'httpclient' , version: '4.3.6'
-    testCompile group: 'junit', name: 'junit', version: '4.11',
-    'info.cukes:cucumber-java:1.1.8',
-    'info.cukes:cucumber-junit:1.1.8'
+    compile group: 'junit', name: 'junit', version: '4.11',
+            'info.cukes:cucumber-java:1.2.4',
+            'info.cukes:cucumber-junit:1.2.4',
+            'info.cukes:cucumber-picocontainer:1.2.4'
     cucumberRuntime files("${jar.archivePath}"
     )
 }

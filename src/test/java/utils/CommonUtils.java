@@ -16,10 +16,7 @@ public class CommonUtils {
     public CommonUtils() {
     }
 
-    private static final String PROPERTIES_FILE_PATH = "resources.properties";
-
-
-    public String postRequest(String url, String authorization, String jsonData) throws UnsupportedEncodingException, IOException {
+    public String postRequest(String url, String authorization, String jsonData) throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost postRequest = new HttpPost(url + ".json");
         postRequest.addHeader("Authorization", authorization);
@@ -30,7 +27,7 @@ public class CommonUtils {
         return status(response,httpClient);
     }
 
-    public String getRequest(String url, String authorization) throws UnsupportedEncodingException, IOException {
+    public String getRequest(String url, String authorization) throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet getRequest = new HttpGet(url + ".json");
         getRequest.addHeader("Authorization", authorization);
@@ -39,7 +36,7 @@ public class CommonUtils {
         return status(response,httpClient);
     }
 
-    public String getRequestId(String url, String authorization, String id) throws UnsupportedEncodingException, IOException {
+    public String getRequestId(String url, String authorization, String id) throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet getRequest = new HttpGet(url + "/"+id+".json");
         getRequest.addHeader("Authorization", authorization);
@@ -48,7 +45,7 @@ public class CommonUtils {
         return status(response,httpClient);
     }
 
-    public String putRequest(String url, String authorization,String id, String jsonData) throws UnsupportedEncodingException, IOException {
+    public String putRequest(String url, String authorization,String id, String jsonData) throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpPut putRequest = new HttpPut(url + "/"+id+".json");
         putRequest.addHeader("Authorization", authorization);
@@ -59,7 +56,7 @@ public class CommonUtils {
         return status(response,httpClient);
     }
 
-    public String deleteRequest(String url, String authorization, String id) throws UnsupportedEncodingException, IOException {
+    public String deleteRequest(String url, String authorization, String id) throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpDelete deleteRequest = new HttpDelete(url + "/"+id+".json");
         deleteRequest.addHeader("Authorization", authorization);
@@ -68,14 +65,8 @@ public class CommonUtils {
         return status(response,httpClient);
     }
 
-    public String status(HttpResponse response,CloseableHttpClient httpClient)  throws UnsupportedEncodingException, IOException {
+    public String status(HttpResponse response,CloseableHttpClient httpClient)  throws IOException {
         String result = "";
-        //Verification of response
-        if (response.getStatusLine().getStatusCode() != 200) {
-            System.out.println("error");
-            throw new RuntimeException("Failed : HTTP error code : "
-                    + response.getStatusLine().getStatusCode());
-        }
         BufferedReader br = new BufferedReader(
                 new InputStreamReader((response.getEntity().getContent())));
         String output;
@@ -89,28 +80,6 @@ public class CommonUtils {
             }
         }
         httpClient.close();
-        return result;
-    }
-
-    public String readProperty(String propertyString) {
-        Properties properties = new Properties();
-        InputStream input = null;
-        String result = "";
-        try {
-            input = new FileInputStream(PROPERTIES_FILE_PATH);
-            properties.load(input);
-            result = properties.getProperty(propertyString);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         return result;
     }
 }
