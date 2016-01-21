@@ -18,11 +18,17 @@ public class ResponsesSteps {
 
     @Then("^The response should contain \"(.*?)\" and \"(.*?)\"$")
     public void theResponseShouldContainSentData(String tag, String tagValue){
-        Assert.assertTrue(projectSteps.getJsonResponse().contains("\"" + tag + "\":" + tagValue));
+        if(tagValue.contains(".")) {
+            String[] values = tagValue.split("\\.");
+            Assert.assertTrue(projectSteps.getJsonResponse().contains("\"" + tag + "\":" + ResourcesSteps.localStore.get(values[0]).get(values[1]).toString()));
+        }
+        else{
+            Assert.assertTrue(projectSteps.getJsonResponse().contains("\"" + tag + "\":" + tagValue));
+        }
     }
 
     @Then("^Response is not empty")
-    public void responseIsNotEmpty() throws Throwable {
+    public void responseIsNotEmpty() {
         Assert.assertFalse(projectSteps.getJsonResponse().isEmpty());
     }
 }

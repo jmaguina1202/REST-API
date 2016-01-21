@@ -43,17 +43,14 @@ public class PropertiesReader {
 
     public String getEndPoint(String type) {
         String endPoint="";
-        if(type.equals("project"))
+        switch (type.charAt(0))
         {
-            return properties.getProperty(PROJECT_URL);
-        }
-        if(type.equals("user"))
-        {
-            endPoint = properties.getProperty(USER_URL);
-        }
-        if(type.equals("item"))
-        {
-            endPoint = properties.getProperty(ITEM_URL);
+            case 'p': endPoint = properties.getProperty(PROJECT_URL);
+                break;
+            case 'u': endPoint = properties.getProperty(USER_URL);
+                break;
+            case 'i': endPoint = properties.getProperty(ITEM_URL);
+                break;
         }
         return endPoint;
     }

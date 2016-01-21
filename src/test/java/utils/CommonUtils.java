@@ -8,9 +8,9 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-
 import java.io.*;
-import java.util.Properties;
+
+import static jdk.nashorn.internal.objects.NativeString.substr;
 
 public class CommonUtils {
     public CommonUtils() {
