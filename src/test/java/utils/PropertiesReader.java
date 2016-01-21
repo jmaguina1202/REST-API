@@ -43,13 +43,13 @@ public class PropertiesReader {
 
     public String getEndPoint(String type) {
         String endPoint="";
-        switch (type.charAt(0))
+        switch (type)
         {
-            case 'p': endPoint = properties.getProperty(PROJECT_URL);
+            case "project": endPoint = properties.getProperty(PROJECT_URL);
                 break;
-            case 'u': endPoint = properties.getProperty(USER_URL);
+            case "user": endPoint = properties.getProperty(USER_URL);
                 break;
-            case 'i': endPoint = properties.getProperty(ITEM_URL);
+            case "item": endPoint = properties.getProperty(ITEM_URL);
                 break;
         }
         return endPoint;
