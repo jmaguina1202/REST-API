@@ -11,15 +11,11 @@ public class ResponsesSteps {
        this.projectSteps = projectSteps;
     }
 
-    @Then("^The response should contain the data with the string value \"(.*?)\" and \"(.*?)\"$")
-    public void theResponseShouldContainSentDataWithStringValue(String tag, String tagValue){
-        Assert.assertTrue(projectSteps.getJsonResponse().contains("\"" + tag + "\":" + "\"" + tagValue + "\""));
+    @Then("^The response should have a \"(.*?)\" attribute with value: \"(.*?)\"$")
+    public void theResponseShouldHaveAnAttributeWithValue(String attr, String attrValue){
+        Assert.assertTrue(jsonResponse.contains(attr) && jsonResponse.contains(attrValue));
     }
 
-    @Then("^The response should contain \"(.*?)\" and \"(.*?)\"$")
-    public void theResponseShouldContainSentData(String tag, String tagValue){
-        Assert.assertTrue(projectSteps.getJsonResponse().contains("\"" + tag + "\":" + tagValue));
-    }
 
     @Then("^Response is not empty")
     public void responseIsNotEmpty() throws Throwable {

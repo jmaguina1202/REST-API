@@ -16,52 +16,50 @@ public class CommonUtils {
     public CommonUtils() {
     }
 
+    CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+    private HttpResponse response;
+
     public String postRequest(String url, String authorization, String jsonData) throws IOException {
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost postRequest = new HttpPost(url + ".json");
         postRequest.addHeader("Authorization", authorization);
         postRequest.addHeader("accept", "application/json");
         StringEntity input = new StringEntity(jsonData);
         postRequest.setEntity(input);
-        HttpResponse response = httpClient.execute(postRequest);
+        response = httpClient.execute(postRequest);
         return status(response,httpClient);
     }
 
     public String getRequest(String url, String authorization) throws IOException {
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet getRequest = new HttpGet(url + ".json");
         getRequest.addHeader("Authorization", authorization);
         getRequest.addHeader("accept", "application/json");
-        HttpResponse response = httpClient.execute(getRequest);
+        response = httpClient.execute(getRequest);
         return status(response,httpClient);
     }
 
     public String getRequestId(String url, String authorization, String id) throws IOException {
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet getRequest = new HttpGet(url + "/"+id+".json");
         getRequest.addHeader("Authorization", authorization);
         getRequest.addHeader("accept", "application/json");
-        HttpResponse response = httpClient.execute(getRequest);
+        response = httpClient.execute(getRequest);
         return status(response,httpClient);
     }
 
     public String putRequest(String url, String authorization,String id, String jsonData) throws IOException {
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpPut putRequest = new HttpPut(url + "/"+id+".json");
         putRequest.addHeader("Authorization", authorization);
         putRequest.addHeader("accept", "application/json");
         StringEntity input = new StringEntity(jsonData);
         putRequest.setEntity(input);
-        HttpResponse response = httpClient.execute(putRequest);
+        response = httpClient.execute(putRequest);
         return status(response,httpClient);
     }
 
     public String deleteRequest(String url, String authorization, String id) throws IOException {
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpDelete deleteRequest = new HttpDelete(url + "/"+id+".json");
         deleteRequest.addHeader("Authorization", authorization);
         deleteRequest.addHeader("accept", "application/json");
-        HttpResponse response = httpClient.execute(deleteRequest);
+        response = httpClient.execute(deleteRequest);
         return status(response,httpClient);
     }
 
