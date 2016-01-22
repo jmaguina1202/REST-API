@@ -2,7 +2,7 @@ package steps;
 
 import cucumber.api.java.en.Then;
 import org.junit.Assert;
-import utils.CommonUtils;
+import utils.LocalStore;
 
 public class ResponsesSteps {
 
@@ -12,17 +12,14 @@ public class ResponsesSteps {
         this.projectSteps = projectSteps;
     }
 
-    @Then("^The response should contain the data with the string value \"(.*?)\" and \"(.*?)\"$")
-    public void theResponseShouldContainSentDataWithStringValue(String tag, String tagValue) {
-        Assert.assertTrue(projectSteps.getJsonResponse().contains("\"" + tag + "\":" + "\"" + tagValue + "\""));
-    }
-
-    @Then("^The response should contain \"(.*?)\" and \"(.*?)\"$")
-    public void theResponseShouldContainSentData(String tag, String tagValue) {
-        if (tagValue.contains(".")) {
-            Assert.assertTrue(projectSteps.getJsonResponse().contains("\"" + tag + "\":" + CommonUtils.getId(tagValue)));
+    @Then("^The response should have a \"(.*?)\" attribute with value: \"(.*?)\"$")
+    public void theResponseShouldContainSentData(String attr, String attrValue) {
+        if (attrValue.contains(".")) {
+            Assert.assertTrue(projectSteps.getJsonResponse().contains(attr) &&
+                    projectSteps.getJsonResponse().contains(LocalStore.getId(attrValue)));
         } else {
-            Assert.assertTrue(projectSteps.getJsonResponse().contains("\"" + tag + "\":" + tagValue));
+            Assert.assertTrue(projectSteps.getJsonResponse().contains(attr) &&
+                    projectSteps.getJsonResponse().contains(attrValue));
         }
     }
 

@@ -6,19 +6,20 @@ Feature: Project
       | Content | nameProject |
       | Icon    | 6           |
     When I store the response "project"
-    Then The response should contain the data with the string value "Content" and "nameProject"
+    Then The response should have a "Content" attribute with value: "nameProject"
 
+  @project
   Scenario: project using REST
     When I did a put request "project" with the id "project.Id" and the values:
       | Content | NameModified |
       | Icon    | 4            |
-    Then The response should contain the data with the string value "Content" and "NameModified"
+    Then The response should have a "Content" attribute with value: "NameModified"
 
     When I did a get request "project" with the id "project.Id"
-    Then The response should contain "Id" and "project.Id"
+    Then The response should have a "Id" attribute with value: "project.Id"
 
     When I did a get all request "project"
     Then Response is not empty
 
     When I did a delete request "project" with the id "project.Id"
-    Then The response should contain "Deleted" and "true"
+    Then The response should have a "Deleted" attribute with value: "true"

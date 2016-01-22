@@ -7,17 +7,18 @@ Feature: As an API consumer
       | FullName | Joe Blow           |
       | Password | pASswoRd           |
     Then I store the response "user"
-    Then The response should contain the data with the string value "FullName" and "Joe Blow"
+    Then The response should have a "FullName" attribute with value: "Joe Blow"
 
+  @user
   Scenario: project using REST
     When I did a get request "user" with the id "user.Id"
-    Then The response should contain "Id" and "user.Id"
+    Then The response should have a "Id" attribute with value: "user.Id"
 
     When I did a get all request "user"
     Then Response is not empty
 
     When I did a put request "user" with the id "user.Id" and the values:
       | FullName | rob |
-    Then The response should contain the data with the string value "FullName" and "rob"
+    Then The response should have a "FullName" attribute with value: "rob"
 
 
